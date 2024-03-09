@@ -1,1 +1,9 @@
 .env
+doc/main.pdf
+doc/*.fdb_latexmk
+doc/*.synctex.gz
+doc/*.aux
+doc/*.fls
+doc/*.log
+doc/*.out
+doc/*.toc

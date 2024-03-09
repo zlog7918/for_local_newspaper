@@ -1,6 +1,12 @@
-version: '2'
+version: '3.3'
 services:
-    web:
+    postgres_base:
+        image: locpaper_postgres_base:latest
+        build:
+            context: ./psql
+            dockerfile: Dockerfile_psql
+        command: [ "echo", "\"locpaper_postgres_base:latest EXIT\"" ]
+    nginx:
         build:
             context: ./nginx
             dockerfile: Dockerfile
@@ -8,31 +14,46 @@ services:
             - 3000:80
         depends_on:
             - php
+        environment:
+            HOME_DIR: ${HOME_DIR}
         volumes:
-            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./nginx/nginx.conf:/etc/nginx/templates/default.conf.template
+            - ./php/site:${HOME_DIR}
     php:
         build:
             context: ./php
             dockerfile: Dockerfile
-        ports:
-            - 9000:9000
+            args:
+                HOME_DIR: ${HOME_DIR}
+        expose:
+            - 9000
         volumes:
-            - ./php:/app
-            - /app/vendor
+            - ./php/site:${HOME_DIR}
         depends_on:
             - postgres
         environment:
-            DATABASE_URL: "postgres://${PSQL_USR}@postgres/${PSQL_DB}"
+            POSTGRES_USER: ${PSQL_USR}
+            POSTGRES_PASSWORD: ${PSQL_PASS}
+            POSTGRES_DB: ${PSQL_DB}
+            POSTGRES_PORT: ${PSQL_PORT}
     postgres:
         build:
             context: ./psql
             dockerfile: Dockerfile
-        # image: postgres:9.6.2-alpine
+        volumes:
+            - psql_db_volume:/var/lib/postgresql
+            - ./psql/init.sql:/docker-entrypoint-initdb.d/init.sql
+        depends_on:
+            - postgres_base
+        expose:
+            - ${PSQL_PORT}
         environment:
             POSTGRES_USER: ${PSQL_USR}
+            POSTGRES_PASSWORD: ${PSQL_PASS}
             POSTGRES_DB: ${PSQL_DB}
 
-
-env_file:
-  - path: ./.env
-    required: true
+volumes:
+    psql_db_volume: {}
+# env_file:
+#   - path: ./.env
+#     required: true
