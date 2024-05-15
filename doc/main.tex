@@ -9,12 +9,12 @@
 \usepackage{xcolor}
 \usepackage[colorlinks=true]{hyperref}
 \AtBeginDocument{
-	\hypersetup{
-		urlcolor=blue,
-		urlbordercolor=blue,
-		pdfborder={1 1 1},
-		pdfborderstyle={/S/U/W 1}
-	}
+    \hypersetup{
+        urlcolor=blue,
+        urlbordercolor=blue,
+        pdfborder={1 1 1},
+        pdfborderstyle={/S/U/W 1}
+    }
 }
 
 % pagestyle
@@ -55,185 +55,185 @@ Dokument ten opisuje funkcjonalności dostępne w końcowym produkcie, narzędzi
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
-	\item Strona - serwis WWW służący do zarządzania artykułami
-	\item Artkuł - tekst napisany przez użytkownika strony przeznaczony do publikacji
-	\item Recenzja - tekst napisany odnośnie konkretnego artykułu (twórca recenzji musi być inny niż artykułu) wraz z oceną w celu ułatwienia decyzji autorowi artykułu o publikacji, edycji lub jego archiwizacji
-	\item Użytkownik - uwierzytelniony uczestnik strony
-	\item Gość - uczestnik strony nie posiadający konta na stronie
-	\item Administrator - uwierzytelniony uczestnik strony, posiadający wyższe uprawnienia
-	\item Ocena - liczba całkowita włącznie od 1 do 5
+    \item Strona - serwis WWW służący do zarządzania artykułami
+    \item Artkuł - tekst napisany przez użytkownika strony przeznaczony do publikacji
+    \item Recenzja - tekst napisany odnośnie konkretnego artykułu (twórca recenzji musi być inny niż artykułu) wraz z oceną w celu ułatwienia decyzji autorowi artykułu o publikacji, edycji lub jego archiwizacji
+    \item Użytkownik - uwierzytelniony uczestnik strony
+    \item Gość - uczestnik strony nie posiadający konta na stronie
+    \item Administrator - uwierzytelniony uczestnik strony, posiadający wyższe uprawnienia
+    \item Ocena - liczba całkowita włącznie od 1 do 5
 \end{itemize}
 \section{Use case}
 \subsection{Gość}
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
-	\item Przeglądanie artykułów:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Gość prosi o wyświetlenie artykułów\\
-				System odpowiada zwracając tabelę z artykułami, ich autorami i datami: publikacji oraz ostatniej edycji.
-			\item Gość prosi o wyświetlenie treści artykułu\\
-				System odpowiada zwracając treść artykułu, jego autora oraz daty: publikacji oraz ostatniej edycji.
-		\end{itemize}
+    \item Przeglądanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Gość prosi o wyświetlenie artykułów\\
+                System odpowiada zwracając tabelę z artykułami, ich autorami i datami: publikacji oraz ostatniej edycji.
+            \item Gość prosi o wyświetlenie treści artykułu\\
+                System odpowiada zwracając treść artykułu, jego autora oraz daty: publikacji oraz ostatniej edycji.
+        \end{itemize}
 \end{itemize}
 \subsection{Użytkownik}
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
-	\item Dodawanie artykułów:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik chce dodać artykuł\\
-				Użytkownik przesyła tytuł i treść artykułu\\
-				System dodaje artykuł i wyświetla go
-		\end{itemize}
-	\item Przeglądanie artykułów:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik prosi o wyświetlenie artykułów\\
-				System odpowiada zwracając tabelę z niezarchiwizowanymi artykułami, ich autorami i datami: stworzenia, ostatniej edycji oraz publikacji.
-			\item Użytkownik prosi o wyświetlenie swoich artykułów\\
-				System odpowiada zwracając tabelę z artykułami tego użytkownika i ich informacją czy są zarchiwizowane, datami: stworzenia, ostatniej edycji oraz publikacji.
-			\item Użytkownik prosi o wyświetlenie artykułu innego użytkownika\\
-				System odpowiada zwracając treść artykułu wraz z średnią oceną, autorem oraz datami: stworzenia, ostatniej edycji oraz publikacji.
-			\item Użytkownik prosi o wyświetlenie swojego artykułu\\
-				System odpowiada zwracając treść artykułu wraz z średnią oceną, recenzjami oraz datami: stworzenia, ostatniej edycji oraz publikacji.
-		\end{itemize}
-	\item Edytowanie artykułów:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik chce edytować swój artykuł\\
-				System odpowiada zwracając treść\\
-				Użytkownik po edytowaniu przesyła nową treść artykułu\\
-				System aktualizuje artykuł i wyświetla artykuł po edycji
-			\item Użytkownik chce edytować artykuł innego użytkownika\\
-				System zwraca informację o braku uprawnień
-		\end{itemize}
-	\item Archiwizowanie artykułów:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik chce zarchiwizować swój artykuł\\
-				System archiwizuje artykuł
-			\item Użytkownik chce zarchiwizować artykuł innego użytkownika\\
-				System zwraca informację o braku uprawnień
-		\end{itemize}
-	\item Dearchiwizowanie artykułów:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik chce dearchiwizować swój artykuł\\
-				System dearchiwizuje artykuł
-		\end{itemize}
-	\item Dodawanie recenzji:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik chce dodać recenzję do swojego artykułu\\
-				Użytkownik przesyła treść recenzji i informację do którego artykułu została stworzona\\
-				System zwraca informację o braku uprawnień
-			\item Użytkownik chce dodać recenzję do artykułu innego użytkownika\\
-				Użytkownik przesyła treść recenzji i informację do którego artykułu została stworzona\\
-				System dodaje recenzję i wyświetla ją
-			\item Użytkownik chce dodać recenzję do tego samego artykułu po raz drugi (bez usunięcia poprzedniej)\\
-				System zwraca informację o niepoprawnej operacji
-		\end{itemize}
-	\item Przeglądanie recenzji:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik prosi o wyświetlenie recenzji (l.mn.) swojego artykułu\\
-				System odpowiada zwracając tabelę z recenzjami, ich autorami i ocenami
-			\item Użytkownik prosi o wyświetlenie recenzji (l.p.) swojego artykułu\\
-				System odpowiada zwracając treść recenzji, jej autora i oceną
-			\item Użytkownik prosi o wyświetlenie swoich recenzji\\
-				System odpowiada zwracając tabelę z recenzjami, ich ocenami i artykułami do których zostały stworzone
-			\item Użytkownik prosi o wyświetlenie swojej recenzji\\
-				System odpowiada zwracając treść recenzji, jej oceną i artykułem do którego został stworzony
-		\end{itemize}
-	\item Edytowanie recenzji:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik chce edytować swoją recenzję\\
-				System odpowiada zwracając treść\\
-				Użytkownik po edytowaniu przesyła nową treść recenzji\\
-				System aktualizuje recenzję i wyświetla ją po edycji
-			\item Użytkownik chce edytować recenzję innego użytkownika\\
-				System zwraca informację o braku uprawnień
-		\end{itemize}
-	\item Usuwanie recenzji:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Użytkownik chce usunąć swoją recenzję\\
-				System usuwa recenzję
-			\item Użytkownik chce usunąć recenzję innego użytkownika\\
-				System zwraca informację o braku uprawnień
-		\end{itemize}
+    \item Dodawanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce dodać artykuł\\
+                Użytkownik przesyła tytuł i treść artykułu\\
+                System dodaje artykuł i wyświetla go
+        \end{itemize}
+    \item Przeglądanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik prosi o wyświetlenie artykułów\\
+                System odpowiada zwracając tabelę z niezarchiwizowanymi artykułami, ich autorami i datami: stworzenia, ostatniej edycji oraz publikacji.
+            \item Użytkownik prosi o wyświetlenie swoich artykułów\\
+                System odpowiada zwracając tabelę z artykułami tego użytkownika i ich informacją czy są zarchiwizowane, datami: stworzenia, ostatniej edycji oraz publikacji.
+            \item Użytkownik prosi o wyświetlenie artykułu innego użytkownika\\
+                System odpowiada zwracając treść artykułu wraz z średnią oceną, autorem oraz datami: stworzenia, ostatniej edycji oraz publikacji.
+            \item Użytkownik prosi o wyświetlenie swojego artykułu\\
+                System odpowiada zwracając treść artykułu wraz z średnią oceną, recenzjami oraz datami: stworzenia, ostatniej edycji oraz publikacji.
+        \end{itemize}
+    \item Edytowanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce edytować swój artykuł\\
+                System odpowiada zwracając treść\\
+                Użytkownik po edytowaniu przesyła nową treść artykułu\\
+                System aktualizuje artykuł i wyświetla artykuł po edycji
+            \item Użytkownik chce edytować artykuł innego użytkownika\\
+                System zwraca informację o braku uprawnień
+        \end{itemize}
+    \item Archiwizowanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce zarchiwizować swój artykuł\\
+                System archiwizuje artykuł
+            \item Użytkownik chce zarchiwizować artykuł innego użytkownika\\
+                System zwraca informację o braku uprawnień
+        \end{itemize}
+    \item Dearchiwizowanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce dearchiwizować swój artykuł\\
+                System dearchiwizuje artykuł
+        \end{itemize}
+    \item Dodawanie recenzji:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce dodać recenzję do swojego artykułu\\
+                Użytkownik przesyła treść recenzji i informację do którego artykułu została stworzona\\
+                System zwraca informację o braku uprawnień
+            \item Użytkownik chce dodać recenzję do artykułu innego użytkownika\\
+                Użytkownik przesyła treść recenzji i informację do którego artykułu została stworzona\\
+                System dodaje recenzję i wyświetla ją
+            \item Użytkownik chce dodać recenzję do tego samego artykułu po raz drugi (bez usunięcia poprzedniej)\\
+                System zwraca informację o niepoprawnej operacji
+        \end{itemize}
+    \item Przeglądanie recenzji:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik prosi o wyświetlenie recenzji (l.mn.) swojego artykułu\\
+                System odpowiada zwracając tabelę z recenzjami, ich autorami i ocenami
+            \item Użytkownik prosi o wyświetlenie recenzji (l.p.) swojego artykułu\\
+                System odpowiada zwracając treść recenzji, jej autora i oceną
+            \item Użytkownik prosi o wyświetlenie swoich recenzji\\
+                System odpowiada zwracając tabelę z recenzjami, ich ocenami i artykułami do których zostały stworzone
+            \item Użytkownik prosi o wyświetlenie swojej recenzji\\
+                System odpowiada zwracając treść recenzji, jej oceną i artykułem do którego został stworzony
+        \end{itemize}
+    \item Edytowanie recenzji:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce edytować swoją recenzję\\
+                System odpowiada zwracając treść\\
+                Użytkownik po edytowaniu przesyła nową treść recenzji\\
+                System aktualizuje recenzję i wyświetla ją po edycji
+            \item Użytkownik chce edytować recenzję innego użytkownika\\
+                System zwraca informację o braku uprawnień
+        \end{itemize}
+    \item Usuwanie recenzji:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce usunąć swoją recenzję\\
+                System usuwa recenzję
+            \item Użytkownik chce usunąć recenzję innego użytkownika\\
+                System zwraca informację o braku uprawnień
+        \end{itemize}
 \end{itemize}
 \subsection{Administrator}
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
-	\item Dodawanie użytkowników:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Administrator prosi o wyświetlenie artykułów\\
-				System odpowiada zwracając tabelę z artykułami, ich autorami i datami: stworzenia, ostatniej edycji oraz publikacji
-		\end{itemize}
-	\item Przeglądanie użytkowników:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Administrator prosi o wyświetlenie użytkowników\\
-				System odpowiada zwracając tabelę z użytkownikami i informacją czy są administratorami
-		\end{itemize}
-	\item Archiwizowanie użytkowników:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Administrator prosi o zarchiwizowanie użytkownika nie będącego administratorem\\
-				System archiwizuje użytkownika
-			\item Administrator prosi o zarchiwizowanie użytkownika będącego administratorem\\
-				System zwraca informację o braku uprawnień
-		\end{itemize}
-	\item Dearchiwizowanie użytkowników:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Administrator prosi o dearchiwizowanie użytkownika\\
-				System dearchiwizuje użytkownika
-		\end{itemize}
-	\item Usuwanie uprawnienia administratora użytkownikom:
-		\begin{itemize}
-		\setlength{\itemsep}{0pt}
-		\setlength{\parskip}{0pt}
-			\item Administrator prosi o usunięcie sobie uprawnienia\\
-				System zwraca informację o braku uprawnień
-			\item Administrator prosi o usunięcie uprawnienia innemu użytkownikowi\\
-				System zwraca informację o braku uprawnień
-		\end{itemize}
+    \item Dodawanie użytkowników:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o wyświetlenie artykułów\\
+                System odpowiada zwracając tabelę z artykułami, ich autorami i datami: stworzenia, ostatniej edycji oraz publikacji
+        \end{itemize}
+    \item Przeglądanie użytkowników:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o wyświetlenie użytkowników\\
+                System odpowiada zwracając tabelę z użytkownikami i informacją czy są administratorami
+        \end{itemize}
+    \item Archiwizowanie użytkowników:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o zarchiwizowanie użytkownika nie będącego administratorem\\
+                System archiwizuje użytkownika
+            \item Administrator prosi o zarchiwizowanie użytkownika będącego administratorem\\
+                System zwraca informację o braku uprawnień
+        \end{itemize}
+    \item Dearchiwizowanie użytkowników:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o dearchiwizowanie użytkownika\\
+                System dearchiwizuje użytkownika
+        \end{itemize}
+    \item Usuwanie uprawnienia administratora użytkownikom:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o usunięcie sobie uprawnienia\\
+                System zwraca informację o braku uprawnień
+            \item Administrator prosi o usunięcie uprawnienia innemu użytkownikowi\\
+                System zwraca informację o braku uprawnień
+        \end{itemize}
 \end{itemize}
 \section{Narzędzia i języki}
 \begin{itemize}
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
-	\item Języki wykonywane po stronie serwera:\\
-		PHP, Bourne Shell, PSQL, YAML
-	\item Narzędzia użyte po stronie serwera:\\
-		Docker-Compose, Docker
-	\item Narzędzia użyte po stronie serwera w kontenerach:\\
-		php, sh, postgresql, nginx
-	\item Języki wykonywane po stronie uczestnika serwisu:\\
-		JavaScript, HTML, CSS
-	\item Narzędzia użyte po stronie uczestnika serwisu:\\
-		przeglądarka internetowa
+    \item Języki wykonywane po stronie serwera:\\
+        PHP, Bourne Shell, PSQL, YAML
+    \item Narzędzia użyte po stronie serwera:\\
+        Docker-Compose, Docker
+    \item Narzędzia użyte po stronie serwera w kontenerach:\\
+        php, sh, postgresql, nginx
+    \item Języki wykonywane po stronie uczestnika serwisu:\\
+        JavaScript, HTML, CSS
+    \item Narzędzia użyte po stronie uczestnika serwisu:\\
+        przeglądarka internetowa
 \end{itemize}
 \end{document}

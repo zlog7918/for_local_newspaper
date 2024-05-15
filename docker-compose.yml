@@ -1,10 +1,9 @@
-version: '3.3'
 services:
     postgres_base:
         image: locpaper_postgres_base:latest
         build:
-            context: ./psql
-            dockerfile: Dockerfile_psql
+            context: ./psql/base
+            dockerfile: Dockerfile
         command: [ "echo", "\"locpaper_postgres_base:latest EXIT\"" ]
     nginx:
         build:
@@ -16,6 +15,7 @@ services:
             - php
         environment:
             HOME_DIR: ${HOME_DIR}
+            PHP_PORT: ${PHP_PORT}
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/templates/default.conf.template
             - ./php/site:${HOME_DIR}
@@ -24,18 +24,24 @@ services:
             context: ./php
             dockerfile: Dockerfile
             args:
+                KEY_DIR: ${KEY_DIR}
                 HOME_DIR: ${HOME_DIR}
         expose:
-            - 9000
+            - ${PHP_PORT}
         volumes:
             - ./php/site:${HOME_DIR}
+            - php_volume:${KEY_DIR}
         depends_on:
             - postgres
         environment:
-            POSTGRES_USER: ${PSQL_USR}
-            POSTGRES_PASSWORD: ${PSQL_PASS}
+            KEY_DIR: ${KEY_DIR}
             POSTGRES_DB: ${PSQL_DB}
+            POSTGRES_USER: ${PSQL_USR}
             POSTGRES_PORT: ${PSQL_PORT}
+            POSTGRES_PASSWORD: ${PSQL_PASS}
+            PHP_PASS_CRYPT_KEY: ${PHP_PASS_CRYPT_KEY}
+            PHP_NAME_CRYPT_KEY: ${PHP_NAME_CRYPT_KEY}
+            PHP_SURNAME_CRYPT_KEY: ${PHP_SURNAME_CRYPT_KEY}
     postgres:
         build:
             context: ./psql
@@ -54,6 +60,7 @@ services:
 
 volumes:
     psql_db_volume: {}
+    php_volume: {}
 # env_file:
 #   - path: ./.env
 #     required: true

@@ -1,0 +1,151 @@
+* {
+    margin:0;
+    box-sizing:border-box;
+}
+
+html, body, #body {
+    height:100%;
+}
+
+#body {
+    display:flex;
+    flex-direction:column;
+}
+
+header, footer {
+    padding:5px;
+    flex-grow:0;
+    display:flex;
+    flex-shrink:0;
+    align-items:center;
+/*    position:relative;*/
+    background-color:#888;
+}
+
+header h1 {
+    flex-grow:1;
+    flex-shrink:0;
+}
+
+.header_buttons {
+    flex-grow:0;
+    display:flex;
+    flex-shrink:0;
+    flex-direction:column;
+}
+
+main {
+    padding:5px;
+    flex-grow:1;
+    display:flex;
+    flex-shrink:0;
+    position:relative;
+    align-items:center;
+    justify-content:center;
+    background-color:#ccc;
+}
+
+#main .window {
+    display:flex;
+    flex-direction:column;
+}
+
+#main .window .tabs {
+    display:flex;
+/*    background:#aaa;*/
+}
+
+#main .window .tabs .tab {
+    user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    cursor:pointer;
+    background:#aaa;
+    border-width:1px;
+    border-color:#000;
+    border-style:solid;
+    padding:5px 5px 0 5px;
+    border-radius:10px 10px 0 0;
+}
+
+#main .window .tabs .tab.selected, #main .window .window_main {
+    background:#999;
+}
+
+#main .window .tabs .tab.selected {
+    top:1px;
+    cursor:default;
+    position:relative;
+    padding-bottom:1px;
+    border-bottom-width:0;
+}
+
+#main .window .window_main {
+    padding:10px;
+    background:#999;
+    border-radius:10px;
+    border:1px solid #000;
+}
+
+#main .window .tabs+.window_main {
+/*    padding-top:0;*/
+/*    border-top-width:0;*/
+    border-radius:0 0 10px 10px;
+}
+
+#main .window .window_main .tab_p {
+    display:none;
+}
+
+#main .window .window_main .tab_p.selected {
+    display:block;
+}
+
+ul.listing {
+    padding:0;
+    display:flex;
+    list-style:none;
+    flex-direction:column;
+    justify-content:center;
+}
+
+ul.listing li {
+    padding:2px;
+    border-top:1px solid #000;
+}
+
+ul.listing li:first-child {
+    border-top-width:0;
+}
+
+ul.listing li a, ul.listing li a div .title, ul.listing li a div .subtitle {
+    display: block;
+}
+
+ul.listing li a {
+    color:inherit;
+    text-decoration:inherit;
+}
+
+ul.listing li a:hover {
+    background-color:#68ff004f;
+}
+
+ul.listing li a div {
+    
+}
+
+ul.listing li a div .title {
+}
+
+ul.listing li a div .subtitle {
+    font-size:.5em;
+}
+
+footer {
+    justify-content:center;
+}

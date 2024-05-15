@@ -1,6 +1,10 @@
-FROM php:8.2-rc-fpm-alpine3.18
-# RUN /bin/sh -c set -eux; [ ! -d /var/www/html ]; mkdir -p /var/www/html; chown www-data:www-data /var/www/html; chmod 1777 /var/www/html
+FROM php:8.1-fpm-alpine3.18
+# FROM php:8.0-fpm-alpine3.16
 ARG HOME_DIR
+ARG KEY_DIR
+# RUN apk --no-cache 8.5.0-r0(curl) 1.1.1w-r1(openssl)
 RUN set -ex && apk --no-cache add postgresql-dev
 RUN docker-php-ext-install pdo_pgsql
+
+RUN mkdir -p "${KEY_DIR}"; chown www-data: "${KEY_DIR}" && chmod 770 "${KEY_DIR}"
 WORKDIR ${HOME_DIR}

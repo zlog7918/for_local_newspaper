@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Git</title>
-</head>
-<body>
-	<h1><?=$db->query('SELECT COUNT(*) FROM usr')->fetch()[0]?></h1>
-</body>
+    <head>
+        <?php require 'head.php'; ?>
+    </head>
+    <body>
+        <div id="body">
+            <?php require $filename; ?>
+        </div>
+        <!-- <script type="text/javascript" src="<?=file_and_last_edit('scripts/script.js')?>"></script> -->
+    </body>
 </html>
