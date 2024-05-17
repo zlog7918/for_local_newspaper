@@ -8,15 +8,96 @@
                 'get_articles'=>[
                     'tab_name'=>'View articles',
                     'selected'=>true,
-                    'content'=>'',
+                    'content'=>'
+                        <div style="display:flex;flex-direction:column;">
+                            <div style="display:flex;padding:5px;">
+                                <div style="flex-grow:1;flex-shrink:1;"></div>
+                                <button style="flex-grow:0;flex-shrink:0;">&#x27F3;</button>
+                            </div>
+                            <ul class="listing">
+                            </ul>
+                        </div>
+                    ',
                     'script'=>'(function() {
-                        let tab_name=\':::tab_name:::\';
-                        let tab=document.getElementById(`tab_${tab_name}`), tab_p=document.getElementById(`tab_${tab_name}_p`);
-                        let setup;
+                        let tab_name=\':::tab_name:::\', tab, tab_p, list;
+                        let setup, load;
 
                         setup=()=>{
-                            tab.addEventListener(\'click\', ()=>{change_to_tab(tab, tab_p)}, false);
+                            tab=document.getElementById(`tab_${tab_name}`);
+                            tab_p=document.getElementById(`tab_${tab_name}_p`);
+                            list=tab_p.getElementsByTagName(\'ul\')[0];
+                            tab.addEventListener(\'click\', ()=>{change_to_tab(tab, tab_p);}, false);
+
+                            let btn=tab_p.getElementsByTagName(\'button\')[0];
+                            btn.addEventListener(\'click\', ()=>{reload();}, false);
+
+                            load();
                         };
+
+                        load=async ()=>{
+                            // list.innerHTML+=\'<li><a href="#"><div><span class="title">Cpoś</span><span class="subtitle">copś</span></div></a></li>\'; // href="/p=view_article&article_nr="
+                            await do_action(\'get_articles\').then(data=>{
+                                list.innerHTML=\'\';
+                                if(data[\'error\']) {
+                                    // console.log(data);
+                                    display_err(data[\'message\']);
+                                } else {
+                                    list_inner=\'\';
+                                    // console.log(data);
+                                    data[\'data\'].forEach(d=>{
+                                        list_inner+=`<li><a href="/p=view_article&article_nr=${d[\'id\']}" data-id="${d[\'id\']}"><div><span class="title">${d[\'title\']}</span><span class="subtitle">${d[\'author\']}</span></div></a></li>`;
+                                    });
+                                    list.innerHTML=list_inner;
+                                    let method_name=\'view_article\';
+                                    [...list.getElementsByTagName(\'a\')].forEach(a=>{
+                                        a.addEventListener(\'click\', async ev=>{
+                                            ev.preventDefault();
+                                            let new_tab=document.getElementById(`tab_${method_name}`);
+                                            let new_tab_p=document.getElementById(`tab_${method_name}_p`);
+                                            if(!new_tab) {
+                                                new_tab=document.createElement(\'div\');
+                                                new_tab.classList.add(\'tab\');
+                                                new_tab.id=`tab_${method_name}`;
+                                                new_tab.innerText=\'View article\';
+
+                                                new_tab_p=document.createElement(\'div\');
+                                                new_tab_p.classList.add(\'tab_p\');
+                                                new_tab_p.id=`tab_${method_name}_p`;
+
+                                                new_tab.addEventListener(\'click\', ()=>{change_to_tab(new_tab, new_tab_p);}, false);
+                                                tab.parentElement.appendChild(new_tab);
+                                                tab_p.parentElement.appendChild(new_tab_p);
+                                            }
+                                            await do_action(method_name, a.href).then(data=>{
+                                                if(data[\'error\']) {
+                                                    // console.log(data);
+                                                    display_err(data[\'message\']);
+                                                } else
+                                                    // display_success();
+                                                    new_tab_p.innerHTML=`
+                                                        <h3>${data[\'data\'][\'title\']}</h3>
+                                                        <h5><a href="#">${data[\'data\'][\'author\']}</a></h5>
+                                                        <textarea cols="80" rows="30" readonly>${data[\'data\'][\'text\']}</textarea>
+                                                    `;
+                                                    change_to_tab(new_tab, new_tab_p);
+                                                    next_page_no_reload(a.href);
+                                            }, err=>{
+                                                display_err(err);
+                                            });
+
+                                            return false;
+                                        }, false);
+                                    });
+                                }
+                            }, err=>{
+                                list.innerHTML=\'\';
+                                display_err(err);
+                            });
+                        }
+
+                        reload=()=>{
+                            load();
+                        }
 
                         setup();
                     })();',
@@ -68,83 +149,26 @@
                         };
 
                         setup();
-                    })();'
+                    })();',
                 ],
             ];
         ?>
         <div class="tabs">
             <?php $was_not_selected=true; ?>
             <?php foreach ($tabs as $tab_name=>$tab_set): ?>
-                <div id='tab_<?=$tab_name?>' class="tab<?=(isset($tab_set['selected']) && $tab_set['selected']===true)&$was_not_selected ? ' selected':''?>"><?=$tab_set['tab_name']?></div>
+                <div id='tab_<?=$tab_name?>' class="tab<?=($was_not_selected && isset($tab_set['selected']) && $tab_set['selected']===true) ? ' selected':''?>"><?=$tab_set['tab_name']?></div>
                 <?php if(isset($tab_set['selected']) && $tab_set['selected']===true) $was_not_selected=false; ?>
             <?php endforeach ?>
-            <div id='tab_:::tab_name:::' class="tab selected">:::tab_name:::</div>
         </div>
         <div class="window_main">
             <?php $was_not_selected=true; ?>
             <?php foreach ($tabs as $tab_name=>$tab_set): ?>
-                <div id='tab_<?=$tab_name?>_p' class="tab_p<?=(isset($tab_set['selected']) && $tab_set['selected']===true)&$was_not_selected ? ' selected':''?>"><?=$tab_set['content']?></div>
+                <div id='tab_<?=$tab_name?>_p' class="tab_p<?=($was_not_selected && isset($tab_set['selected']) && $tab_set['selected']===true) ? ' selected':''?>"><?=$tab_set['content']?></div>
                 <script type="text/javascript"><?=isset($tab_set['script']) ? str_replace(':::tab_name:::', $tab_name, $tab_set['script']):''?></script>
                 <?php if(isset($tab_set['selected']) && $tab_set['selected']===true) $was_not_selected=false; ?>
             <?php endforeach ?>
-            <div id='tab_:::tab_name:::_p' class="tab_p selected">
-                <div style="display:flex;flex-direction:column;">
-                    <div style="display:flex;padding:5px;">
-                        <div style="flex-grow:1;flex-shrink:1;"></div>
-                        <button style="flex-grow:0;flex-shrink:0;">&#x27F3;</button>
-                    </div>
-                    <ul class="listing">
-                    </ul>
-                </div>
-            </div>
-            <script type="text/javascript">
-                (function() {
-                    let tab_name=':::tab_name:::', tab, tab_p, list;
-                    let setup, load;
-
-                    setup=()=>{
-                        tab=document.getElementById(`tab_${tab_name}`);
-                        // list=document.getElementById(`list_${tab_name}`);
-                        tab_p=document.getElementById(`tab_${tab_name}_p`);
-                        list=tab_p.getElementsByTagName('ul')[0];
-                        tab.addEventListener('click', ()=>{change_to_tab(tab, tab_p);}, false);
-
-                        // let btn=document.getElementById(`refresh_btn_${tab_name}`);
-                        let btn=tab_p.getElementsByTagName('button')[0];
-                        btn.addEventListener('click', ()=>{reload();}, false);
-
-                        load();
-                    };
-
-                    load=async ()=>{
-                        // list.innerHTML+='<li><a href="#"><div><span class="title">Cpoś</span><span class="subtitle">copś</span></div></a></li>'; // href="/p=view_article&article_nr="
-                        await do_action('get_articles').then(data=>{
-                            list.innerHTML='';
-                            if(data['error']) {
-                                // console.log(data);
-                                display_err(data['message']);
-                            } else {
-                                data['data'].forEach(d=>{
-                                    list_inner+=`<li><a href="#"><div><span class="title">${d['title']}</span><span class="subtitle">${d['author']}</span></div></a></li>`; // href="/p=view_article&article_nr="
-                                });
-                                list.innerHTML=list_inner;
-                            }
-                        }, err=>{
-                            list.innerHTML='';
-                            display_err(err);
-                        });
-                    }
-
-                    reload=()=>{
-                        load();
-                    }
-
-                    setup();
-                })();
-            </script>
         </div>
     </div>
-    <!-- <script type="text/javascript" src="<?=file_and_last_edit('scripts/logged.js')?>"></script> -->
 </main>
 <footer id="footer">
     <?php require 'inner/footer.php'; ?>

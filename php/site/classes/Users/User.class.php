@@ -110,10 +110,17 @@
 
         }
         public function get_articles() :string { // array
+            // TODO
         // public function get_articles(ArticleType ...$aTypes) :string { // array
             require 'connect.php';
-            $ret=$db->change_pass($this, $pass);
-            return \json_encode($ret);
+            $ret=$db->get_articles($this);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
+        }
+        public function view_article() :string { // array
+        // public function view_article(int $id) :string { // array
+            require 'connect.php';
+            $ret=$db->view_article($this, $_GET['article_nr']);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
         }
         public function get_display_name() :string {
 

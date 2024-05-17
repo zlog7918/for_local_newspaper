@@ -8,13 +8,13 @@
         public static function getSymmetricKey(EnDeCoderOpt $opt) :string {
             $opt=$opt->get_string();
             $filename="{$_ENV['KEY_DIR']}/$opt";
-            if(file_exists($filename)) {
-                $secretKey=base64_decode(file_get_contents($filename));
-                $secretKey=mb_substr($secretKey, static::$SALT_LEN, null, '8bit');
+            if(\file_exists($filename)) {
+                $secretKey=\base64_decode(file_get_contents($filename));
+                $secretKey=\mb_substr($secretKey, static::$SALT_LEN, null, '8bit');
             }
             else {
-                $secretKey=random_bytes(static::$KEY_LEN);
-                file_put_contents($filename, base64_encode(random_bytes(static::$SALT_LEN).$secretKey));
+                $secretKey=\random_bytes(static::$KEY_LEN);
+                \file_put_contents($filename, \base64_encode(\random_bytes(static::$SALT_LEN).$secretKey));
             }
             return $secretKey;
         }
@@ -28,14 +28,14 @@
          * @return string
          */
         public static function simpleEncrypt(string $message, string $key) :string {
-            $nonce=random_bytes(static::$NONCE_LEN);
+            $nonce=\random_bytes(static::$NONCE_LEN);
             $encrypted=\sodium_crypto_aead_xchacha20poly1305_ietf_encrypt(
                 $message,
                 $nonce,
                 $nonce,
                 $key
             );
-            return base64_encode($nonce.$encrypted);
+            return \base64_encode($nonce.$encrypted);
         }
 
         /**
@@ -48,17 +48,17 @@
          * @throws Exception
          */
         public static function simpleDecrypt(string $message, string $key) :string {
-            $message=base64_decode($message);
-            $nonce=mb_substr($message, 0, static::$NONCE_LEN, '8bit');
-            $ciphertext=mb_substr($message, static::$NONCE_LEN, null, '8bit');
+            $message=\base64_decode($message);
+            $nonce=\mb_substr($message, 0, static::$NONCE_LEN, '8bit');
+            $ciphertext=\mb_substr($message, static::$NONCE_LEN, null, '8bit');
             $plaintext=\sodium_crypto_aead_xchacha20poly1305_ietf_decrypt(
                 $ciphertext,
                 $nonce,
                 $nonce,
                 $key
             );
-            // if(!is_string($plaintext)) {
-            //     throw new Exception('Invalid message');
+            // if(!\is_string($plaintext)) {
+            //     throw new \Exception('Invalid message');
             // }
             return $plaintext;
         }

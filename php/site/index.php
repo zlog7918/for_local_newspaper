@@ -21,8 +21,8 @@
             $ret=$_SESSION['user']->{$_GET['do']}();
             if($ret instanceof \Users\UsrBase) {
                 $_SESSION['user']=$ret;
-                if($ret instanceof \Users\UnloggedUser && $ret->is_err()!==false) {
-                    echo json_encode(['error'=>true, 'message'=>$ret->is_err()]);
+                if($ret instanceof \Users\UnloggedUser && $ret->is_err()===true) {
+                    echo json_encode(['error'=>true, 'message'=>$ret->get_err()]);
                     exit();
                 }
                 echo json_encode(['error'=>false]);

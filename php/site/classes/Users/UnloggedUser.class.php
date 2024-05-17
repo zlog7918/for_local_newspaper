@@ -11,8 +11,11 @@
         public function is_logged() :bool {
             return false;
         }
-        public function is_err() :string|bool {
-            return ($this->mess==null ? false:$this->mess);
+        public function is_err() :bool {
+            return $this->mess!==null;
+        }
+        public function get_err() :?string {
+            return $this->mess;
         }
         public function log_in() :UsrBase {
         // public function log_in(string $nick, string $pass) :UsrBase {

@@ -1,8 +1,15 @@
 function next_page(href) {
 	if(href==='.')
-    	window.location=window.location.pathname+window.location.search;
+    	window.location.href=window.location.pathname+window.location.search;
 	else
-    	window.location=href;
+    	window.location.href=href;
+}
+
+function next_page_no_reload(href) {
+    let url=new URL(window.location);
+    if(href!=='.')
+        url.href=href;
+    history.pushState({}, "", url);
 }
 
 function ajax_call(action_name, name, is_post_method, get, data) {
@@ -46,11 +53,12 @@ function do_action(name, get, data) {
 }
 
 function display_err(mess) {
-    console.log(mess);
+    console.log(mess=`${mess}`);
     alert(mess.replace('<br>', "\n"));
 }
 
 function display_success(mess) {
+    mess=`${mess}`;
     // console.log(mess);
     alert(mess.replace('<br>', "\n"));
 }
