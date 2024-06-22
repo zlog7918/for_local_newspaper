@@ -1,0 +1,220 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{polski}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{lastpage}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage[colorlinks=true]{hyperref}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} \nameref*{#1}}}
+\AtBeginDocument{
+    \hypersetup{
+        urlcolor=blue,
+        urlbordercolor=blue,
+        pdfborder={1 1 1},
+        pdfborderstyle={/S/U/W 1}
+    }
+}
+
+% pagestyle
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[R]{Strona dla lokalnej gazetki}
+\fancyfoot{}
+\fancyfoot[C]{Strona \thepage\ z \pageref*{LastPage}}
+
+\setlist[itemize,2]{label=$\circ$}
+
+% title data
+\title{Zakres projektu i podsumowanie}
+\author{Szymon Wasążnik}
+% \date{}
+
+% document
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\thispagestyle{empty}
+\hspace{0pt}
+\vfill
+\begin{abstract}
+Dokument ten opisuje funkcjonalności dostępne w końcowym produkcie, narzędzia oraz języki programowania z których pomocą został on wykonany.
+\end{abstract}
+\vfill
+\hspace{0pt}
+
+\newpage
+\setcounter{page}{1}
+\tableofcontents
+
+\newpage
+\section{Zrealizowane {\tt use case}{\textquotesingle}y}
+\subsection{Gość}
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+    \item Przeglądanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Gość prosi o wyświetlenie artykułów\\
+                \includegraphics[width=\textwidth]{gosc_get_articles.png}
+            \item Gość prosi o wyświetlenie treści artykułu\\
+                Po wybraniu artykułu:\\
+                \includegraphics[width=\textwidth]{gosc_view_article.png}
+        \end{itemize}
+\end{itemize}
+\newpage
+\subsection{Użytkownik}
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+    \item Dodawanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce dodać artykuł\\
+                \includegraphics[width=\textwidth]{user_create_article.png}
+        \end{itemize}
+    \item Przeglądanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik prosi o wyświetlenie artykułów
+            \item Użytkownik prosi o wyświetlenie swoich artykułów
+            \item Użytkownik prosi o wyświetlenie artykułu innego użytkownika
+            \item Użytkownik prosi o wyświetlenie swojego artykułu
+        \end{itemize}
+    \item Edytowanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce edytować swój artykuł
+            \item Użytkownik chce edytować artykuł innego użytkownika
+        \end{itemize}
+    \item Archiwizowanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce zarchiwizować swój artykuł
+            \item Użytkownik chce zarchiwizować artykuł innego użytkownika
+        \end{itemize}
+    \item Dodawanie recenzji:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce dodać recenzję do swojego artykułu
+            \item Użytkownik chce dodać recenzję do artykułu innego użytkownika
+            \item Użytkownik chce dodać recenzję do tego samego artykułu po raz drugi (bez usunięcia poprzedniej)
+        \end{itemize}
+    \item Przeglądanie recenzji:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik prosi o wyświetlenie recenzji (l.mn.) swojego artykułu
+            \item Użytkownik prosi o wyświetlenie recenzji (l.p.) swojego artykułu
+            \item Użytkownik prosi o wyświetlenie swoich recenzji
+            \item Użytkownik prosi o wyświetlenie swojej recenzji
+        \end{itemize}
+    \item Edytowanie recenzji:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce edytować swoją recenzję
+            \item Użytkownik chce edytować recenzję innego użytkownika
+        \end{itemize}
+    \item Usuwanie recenzji:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce usunąć swoją recenzję
+            \item Użytkownik chce usunąć recenzję innego użytkownika
+        \end{itemize}
+    \item Dearchiwizowanie artykułów:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Użytkownik chce dearchiwizować swój artykuł\\
+                Po use case {\tt Przeglądanie artykułów} i wybraniu artykułu:\\
+                \includegraphics[width=\textwidth]{user_before_dearchive.png}
+                Po wciśnięciu zaznaczonego przycisku artykuł został dearchiwizowany:\\
+                \includegraphics[width=\textwidth]{user_after_dearchive.png}
+        \end{itemize}
+\end{itemize}
+% \newpage
+\subsection{Administrator}
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+    \item Dodawanie użytkowników:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o dodanie użytkownika
+        \end{itemize}
+\newpage
+    \item Przeglądanie użytkowników:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o wyświetlenie użytkowników\\
+                \includegraphics[width=\textwidth]{admin_create_user.png}
+        \end{itemize}
+    \item Archiwizowanie użytkowników:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o zarchiwizowanie użytkownika nie będącego administratorem
+            \item Administrator prosi o zarchiwizowanie użytkownika będącego administratorem
+        \end{itemize}
+    \item Dearchiwizowanie użytkowników:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o dearchiwizowanie użytkownika
+        \end{itemize}
+    \item Usuwanie uprawnienia administratora użytkownikom:
+        \begin{itemize}
+        \setlength{\itemsep}{0pt}
+        \setlength{\parskip}{0pt}
+            \item Administrator prosi o usunięcie sobie uprawnienia
+            \item Administrator prosi o usunięcie uprawnienia innemu użytkownikowi
+        \end{itemize}
+\end{itemize}
+\section{Niezrealizowane aspekty}
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+    \item Brak sposobów filtrowania danych
+\end{itemize}
+\section{Narzędzia i języki, którymi zrealizowano projekt}
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+    \item Języki wykonywane po stronie serwera:\\
+        PHP, PSQL, YAML
+    \item Narzędzia użyte po stronie serwera:\\
+        Docker-Compose, Docker
+    \item Narzędzia użyte po stronie serwera w kontenerach:\\
+        php, postgresql, nginx
+    \item Języki wykonywane po stronie uczestnika serwisu:\\
+        JavaScript, HTML, CSS
+    \item Narzędzia użyte po stronie uczestnika serwisu:\\
+        przeglądarka internetowa
+\end{itemize}
+\section{Podsumowanie}
+Projekt został wykonany obejmując wszystkie podstawowe funkcjonalności.\\
+Następnymi krokami przy rozwijaniu tego projektu byłoby:
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+    \item Dodanie filtrowania danych
+    \item Poprawienie szaty graficznej interfejsu użytkownika
+    \item Zaimplementowanie bardziej zaawansowanej walidacji danych i ujednolicenie obsługi błędów
+\end{itemize}
+\end{document}

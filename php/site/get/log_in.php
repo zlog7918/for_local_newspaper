@@ -3,19 +3,38 @@
 </header>
 <main id="main">
     <div class="window">
-        <!-- <div class="tabs">
-            <div class="tab" data-href='/?p=get_articles'>View articles</div>
-            <div class="tab" data-href='/?p=add_article'>Create article</div>
-        </div> -->
+        <?php
+            $tabs=[
+                'get_articles'=>[
+                    'tab_name'=>'View articles',
+                    'selected'=>true,
+                    'content'=>file_get_contents('get/inner/log_in/get_articles.html'),
+                    'script'=>file_get_contents('get/inner/log_in/get_articles.js'),
+                ],
+                'change_password'=>[
+                    'tab_name'=>'Log in',
+                    'content'=>file_get_contents('get/inner/log_in/log_in.html'),
+                    'script'=>file_get_contents('get/inner/log_in/log_in.js'),
+                ],
+            ];
+        ?>
+        <div class="tabs">
+            <?php $was_not_selected=true; ?>
+            <?php foreach ($tabs as $tab_name=>$tab_set): ?>
+                <div id='tab_<?=$tab_name?>' class="tab<?=($was_not_selected && isset($tab_set['selected']) && $tab_set['selected']===true) ? ' selected':''?>"><?=$tab_set['tab_name']?></div>
+                <?php if(isset($tab_set['selected']) && $tab_set['selected']===true) $was_not_selected=false; ?>
+            <?php endforeach ?>
+        </div>
+        <script type="text/javascript"><?=file_get_contents('get/inner/logged/articles_funcs.js')?></script>
         <div class="window_main">
-            <form id="login_form" style="display:flex;flex-direction:column;" action="log_in" method="POST">
-                <input name="nick" type="text" placeholder="nick">
-                <input name="pass" type="password" placeholder="password">
-                <button>Submit</button>
-            </form>
+            <?php $was_not_selected=true; ?>
+            <?php foreach ($tabs as $tab_name=>$tab_set): ?>
+                <div id='tab_<?=$tab_name?>_p' class="tab_p<?=($was_not_selected && isset($tab_set['selected']) && $tab_set['selected']===true) ? ' selected':''?>"><?=$tab_set['content']?></div>
+                <script type="text/javascript"><?=isset($tab_set['script']) ? str_replace(':::tab_name:::', $tab_name, $tab_set['script']):''?></script>
+                <?php if(isset($tab_set['selected']) && $tab_set['selected']===true) $was_not_selected=false; ?>
+            <?php endforeach ?>
         </div>
     </div>
-    <script type="text/javascript" src="<?=file_and_last_edit('scripts/log_in.js')?>"></script>
 </main>
 <footer id="footer">
     <?php require 'inner/footer.php'; ?>

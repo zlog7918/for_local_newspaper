@@ -1,21 +1,47 @@
+function get_url(href) {
+    let url=new URL(window.location);
+    if(href==='.') {
+        url.href=url.origin+url.pathname;
+        return url;
+    }
+    if(href==='/') {
+        url.href=url.origin;
+        return url;
+    }
+    if(href.at(0)==='/') {
+        url.href=url.origin+href;
+        return url;
+    }
+    if(href.at(0)==='.') {
+        url.href=`${url.origin}${url.pathname}${href.substr(1)}`;
+        return url;
+    }
+    url.href=href
+    return url;
+}
+
 function next_page(href) {
-	if(href==='.')
-    	window.location.href=window.location.pathname+window.location.search;
-	else
-    	window.location.href=href;
+    if(href==='.')
+        window.location.href=window.location.pathname+window.location.search;
+    else
+        window.location.href=get_url(href).href;
 }
 
 function next_page_no_reload(href) {
-    let url=new URL(window.location);
-    if(href!=='.')
-        url.href=href;
-    history.pushState({}, "", url);
+    history.pushState({}, "", get_url(href).href);
 }
 
 function ajax_call(action_name, name, is_post_method, get, data) {
+    let is_get=(get!==undefined && get!==null);
+    if(is_get) {
+        if(get.at(0)==='/')
+            get=get.substr(1);
+        if(get.at(0)==='?')
+            get=get.substr(1);
+    }
     return new Promise((resolve, reject)=>{
         let ajax_req=new XMLHttpRequest();
-        ajax_req.open(is_post_method ? "POST":"GET", `/?${action_name}=${name}${(get===undefined || get===null) ? '':'&'+get}`);
+        ajax_req.open(is_post_method ? "POST":"GET", `/?${action_name}=${name}${is_get ? `&${get}`:''}`);
         ajax_req.onreadystatechange=function() {
             if(this.readyState==XMLHttpRequest.DONE)
                 if(this.status==200)
@@ -35,7 +61,8 @@ function ajax_call(action_name, name, is_post_method, get, data) {
 // }
 
 function do_action(name, get, data) {
-    let is_post_method=!(data===undefined || data===null);
+    let is_post_method=(data!==undefined && data!==null);
+    data=(is_post_method && data instanceof HTMLFormElement) ? (new FormData(data)):data;
     return new Promise(async (resolve, reject)=>{
         ajax_call('do', name, is_post_method, get, data).then(ret_data=>{
         	try {

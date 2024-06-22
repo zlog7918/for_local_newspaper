@@ -2,136 +2,150 @@
     namespace Users;
     class User extends UsrBase {
         private int $id;
-        private ?string $name=null;
         private ?string $nick=null;
+        private ?string $name=null;
         private ?string $surname=null;
         private ?string $academic_titles=null;
+        private ?string $full_name=null;
         // private bool $is_active=null;
-
-        private bool $not_called_name=true;
-        private bool $not_called_nick=true;
-        private bool $not_called_surname=true;
-        private bool $not_called_academic_titles=true;
 
         public function __construct(int $id) {
             $this->id=$id;
+            require 'connect.php';
+            $info=$db->get_user_info($id);
+            if($info['error'])
+                return;
+            $info=$info['data'];
+            $this->nick=$info['nick'];
+            $this->name=$info['name'];
+            $this->surname=$info['surname'];
+            $this->academic_titles=$info['academic_titles'];
+            $this->full_name=(is_null($this->academic_titles) ? '':"{$this->academic_titles} ")."{$this->name} {$this->surname}";
         }
 
         public function get_id() :int {
             return $this->id;
         }
-        // private function set_name(string $name) :void {
-        //     $this->name=$name;
-        // }
         public function get_name() :string {
-            require 'connect.php';
-            if($this->not_called_name) {
-                $this->name=$db->get_user_name($this);
-                $this->not_called_name=false;
-            }
             return $this->name;
         }
-        // private function set_nick(string $nick) :void {
-        //     $this->nick=$nick;
-        // }
         public function get_nick() :string {
-            require 'connect.php';
-            if($this->not_called_nick) {
-                $this->nick=$db->get_user_nick($this);
-                $not_called_nick=false;
-            }
             return $this->nick;
         }
-        // private function set_surname(string $surname) :void {
-        //     $this->surname=$surname;
-        // }
         public function get_surname() :string {
-            require 'connect.php';
-            if($this->not_called_surname) {
-                $this->surname=$db->get_user_surname($this);
-                $not_called_surname=false;
-            }
             return $this->surname;
         }
-        // private function set_academic_titles(string $academic_titles) :void {
-        //     $this->academic_titles=$academic_titles;
-        // }
         public function get_academic_titles() :string {
-            require 'connect.php';
-            if($this->not_called_academic_titles) {
-                $this->academic_titles=$db->get_user_academic_titles($this);
-                $not_called_academic_titles=false;
-            }
             return $this->academic_titles;
         }
-        // protected function set_is_active(bool $is_active) :void {
-        //     $this->is_active=$is_active;
-        // }
-        // public function get_is_active() :bool {
-        //     return $this->is_active;
-        // }
+        public function get_display_name() :string {
+            return $this->full_name;
+        }
 
         public function add_article() :string { // void
         // public function log_in(string $title, string $text) :UsrBase {
             if(!(isset($_POST['title']) && isset($_POST['text'])))
-                return ['error'=>true, 'message'=>'Title or content of article not sent.'];
+                return \json_encode(['error'=>true, 'message'=>'Title or content of article not sent.']);
             require 'connect.php';
             $ret=$db->add_article($this, $_POST['title'], $_POST['text']);
             return \json_encode($ret);
-            
         }
-        public function add_review(Article $a, string $text, int $degree) :string { // void
-
-        }
-        public function archive_article(Article $a) :string { // void
-
-        }
-        public function change_info(string $nick, string $name, string $surname, string $academic_titles) :string { // void
-
-        }
-        public function change_password() :string { // bool
-        // public function change_password(string $pass, string $pass_repeat) :string { // bool
-            if(!(isset($_POST['pass']) && isset($_POST['pass_repeat'])))
-                return ['error'=>true, 'message'=>'Password or repeated password not sent.'];
+        public function add_review() :string { // void
+        // public function add_review(Article $a, string $text, int $degree) :string { // void
+            if(!(isset($_POST['article_nr']) && isset($_POST['text']) && isset($_POST['degree'])))
+                return \json_encode(['error'=>true, 'message'=>'Degree, text of review or ID of article not sent.']);
             require 'connect.php';
-            $ret=$db->change_pass($this, $pass);
+            $ret=$db->add_review($this, $_POST['article_nr'], $_POST['degree'], $_POST['text']);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
+        }
+        public function view_review() :string { // void
+        // public function view_review(Review $r) :string { // void
+            if(!isset($_GET['review_nr']))
+                return \json_encode(['error'=>true, 'message'=>'ID of review not sent.']);
+            require 'connect.php';
+            $ret=$db->view_review($this, $_GET['review_nr']);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
+        }
+        public function archive_article() :string { // void
+        // public function archive_article(Article $a) :string { // void
+            if(!isset($_GET['article_nr']))
+                return \json_encode(['error'=>true, 'message'=>'ID of article not sent.']);
+            require 'connect.php';
+            $ret=$db->archive_article($this, $_GET['article_nr']);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
+        }
+        public function change_info() :string { // void
+        // public function change_info(string $nick, string $name, string $surname, string $academic_titles) :string { // void
+            if(!(isset($_POST['nick']) && isset($_POST['name']) && isset($_POST['surname']) && isset($_POST['academic_titles'])))
+                return \json_encode(['error'=>true, 'message'=>'Neccessary information about user not sent.']);
+            require 'connect.php';
+            $ret=$db->change_info($this, $_POST['nick'], $_POST['name'], $_POST['surname'], $_POST['academic_titles']);
             return \json_encode($ret);
         }
-        public function dearchive_article(Article $a) :string { // void
-
-        }
-        public function delete_review(Review $r) :string { // void
-
-        }
-        public function edit_article(Article $a, string $text) :string { // void
-
-        }
-        public function edit_review(Review $r, string $text, int $degree) :string { // void
-
-        }
-        public function get_articles() :string { // array
-            // TODO
-        // public function get_articles(ArticleType ...$aTypes) :string { // array
+        public function change_password() :string { // bool
+        // public function change_password(string $pass, string $pass_rep) :string { // bool
+            if(!(isset($_POST['pass']) && isset($_POST['pass_rep'])))
+                return \json_encode(['error'=>true, 'message'=>'Password or repeated password not sent.']);
             require 'connect.php';
-            $ret=$db->get_articles($this);
+            $ret=$db->change_pass($this, $_POST['pass'], $_POST['pass_rep']);
+            return \json_encode($ret);
+        }
+        public function dearchive_article() :string { // void
+        // public function dearchive_article(Article $a) :string { // void
+            if(!isset($_GET['article_nr']))
+                return \json_encode(['error'=>true, 'message'=>'ID of article not sent.']);
+            require 'connect.php';
+            $ret=$db->dearchive_article($this, $_GET['article_nr']);
             return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
         }
-        public function view_article() :string { // array
-        // public function view_article(int $id) :string { // array
+        public function delete_review() :string { // void
+        // public function delete_review(Review $r) :string { // void
+            if(!isset($_GET['review_nr']))
+                return \json_encode(['error'=>true, 'message'=>'ID of review not sent.']);
             require 'connect.php';
-            $ret=$db->view_article($this, $_GET['article_nr']);
+            $ret=$db->delete_review($this, $_GET['review_nr']);
             return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
         }
-        public function get_display_name() :string {
-
+        public function edit_article() :string { // void
+        // public function edit_article(Article $a, string $text) :string { // void
+            if(!(isset($_POST['article_nr']) && isset($_POST['text'])))
+                return \json_encode(['error'=>true, 'message'=>'ID or content of article not sent.']);
+            require 'connect.php';
+            $ret=$db->edit_article($this, $_POST['article_nr'], $_POST['text']);
+            return \json_encode($ret);
+        }
+        public function edit_review() :string { // void
+        // public function edit_review(Review $r, string $text, int $degree) :string { // void
+            if(!(isset($_POST['review_nr']) && isset($_POST['text']) && isset($_POST['degree'])))
+                return \json_encode(['error'=>true, 'message'=>'ID of article not sent.']);
+            require 'connect.php';
+            $ret=$db->edit_review($this, $_POST['review_nr'], $_POST['degree'], $_POST['text']);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
         }
         public function get_reviews() :string { // array
-
+        // public function get_reviews(int $id) :string { // array
+            if(!isset($_GET['article_nr']))
+                return \json_encode(['error'=>true, 'message'=>'ID of article not sent.']);
+            require 'connect.php';
+            $ret=$db->get_reviews($this, $_GET['article_nr']);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
         }
-        public function publish_article(Article $a) :string { // void
-
+        public function publish_article() :string { // void
+        // public function publish_article(Article $a) :string { // void
+            if(!isset($_GET['article_nr']))
+                return \json_encode(['error'=>true, 'message'=>'ID of article not sent.']);
+            require 'connect.php';
+            $ret=$db->publish_article($this, $_GET['article_nr']);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
         }
-
+        public function unpublish_article() :string { // void
+        // public function unpublish_article(Article $a) :string { // void
+            if(!isset($_GET['article_nr']))
+                return \json_encode(['error'=>true, 'message'=>'ID of article not sent.']);
+            require 'connect.php';
+            $ret=$db->unpublish_article($this, $_GET['article_nr']);
+            return \json_encode(isset($ret['error']) ? $ret:['error'=>false, 'data'=>$ret]);
+        }
         public function is_logged() :bool { // bool
             return true;
         }

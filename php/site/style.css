@@ -122,28 +122,28 @@ ul.listing li:first-child {
     border-top-width:0;
 }
 
-ul.listing li a, ul.listing li a div .title, ul.listing li a div .subtitle {
+ul.listing li span.a, ul.listing li span.a div .title, ul.listing li span.a div .subtitle {
     display: block;
 }
 
-ul.listing li a {
-    color:inherit;
-    text-decoration:inherit;
+ul.listing li span.a {
+/*    color:inherit;*/
+/*    text-decoration:inherit;*/
 }
 
-ul.listing li a:hover {
+ul.listing li:hover span.a {
     background-color:#68ff004f;
 }
 
-ul.listing li a div {
+ul.listing li span.a div {
     
 }
 
-ul.listing li a div .title {
+ul.listing li span.a div .title {
     font-size:1.1em;
 }
 
-ul.listing li a div .subtitle {
+ul.listing li span.a div .subtitle {
     font-size:.8em;
 }
 

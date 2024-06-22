@@ -5,26 +5,16 @@
     <div class="window">
         <?php
             $tabs=[
-                'get_articles'=>[
-                    'tab_name'=>'View articles',
+                'get_users'=>[
+                    'tab_name'=>'View users',
                     'selected'=>true,
-                    'content'=>file_get_contents('get/inner/logged/get_articles.html'),
-                    'script'=>file_get_contents('get/inner/logged/get_articles.js'),
+                    'content'=>file_get_contents('get/inner/admin/get_users.html'),
+                    'script'=>file_get_contents('get/inner/admin/get_users.js'),
                 ],
-                'change_info'=>[
-                    'tab_name'=>'Change user info',
-                    'content'=>require 'inner/logged/change_info.php',
-                    'script'=>file_get_contents('get/inner/logged/change_info.js'),
-                ],
-                'change_password'=>[
-                    'tab_name'=>'Change password',
-                    'content'=>file_get_contents('get/inner/logged/ch_pass.html'),
-                    'script'=>file_get_contents('get/inner/logged/ch_pass.js'),
-                ],
-                'add_article'=>[
-                    'tab_name'=>'Create article',
-                    'content'=>file_get_contents('get/inner/logged/add_article.html'),
-                    'script'=>file_get_contents('get/inner/logged/add_article.js'),
+                'create_user'=>[
+                    'tab_name'=>'Create user',
+                    'content'=>file_get_contents('get/inner/admin/create_user.html'),
+                    'script'=>file_get_contents('get/inner/admin/create_user.js'),
                 ],
             ];
         ?>
@@ -35,7 +25,7 @@
                 <?php if(isset($tab_set['selected']) && $tab_set['selected']===true) $was_not_selected=false; ?>
             <?php endforeach ?>
         </div>
-        <script type="text/javascript"><?=file_get_contents('get/inner/logged/articles_funcs.js')?></script>
+        <script type="text/javascript"><?=file_get_contents('get/inner/admin/users_funcs.js')?></script>
         <div class="window_main">
             <?php $was_not_selected=true; ?>
             <?php foreach ($tabs as $tab_name=>$tab_set): ?>
